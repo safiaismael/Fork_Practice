@@ -1,0 +1,34 @@
+---
+title: "Finding files"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if("librarian" %in% installed.packages()==FALSE){
+  install.packages("librarian")
+}
+library(librarian)
+shelf(knitr, here, quiet = TRUE)
+```
+
+# Load data by specifying the path to the file
+Can you run the following code chunk? On its own? When knitting the whole Rmd file?
+```{r direct-path}
+dat <- read.csv("data/languages.csv")
+kable(head(dat), caption = "Specifying path directly")
+```
+
+# The here package
+The `here` command (part of the `here` package) prints the path to what it thinks is a sensible "root" location for the current file or project. This may or may not be the same as the current *working directory* -- the place where R will look by default when importing files, saving files and so on.
+```{r}
+getwd() # The path to the current working directory
+here() # The path to a sensible place to look for files
+```
+
+
+```{r using-here}
+dat <- read.csv(here("data", "languages.csv"))
+kable(tail(dat), caption = "Using here() to specify path")
+```
